@@ -88,17 +88,17 @@ CALL CMEM_SETUP
 !
 SELECT CASE ( CFINOUT )
 !
-  CASE ( 'gribapi' ) !gribapicase
-!  
-   CALL RDCMEMGRIBAPIINFO !gribapicase
+!  CASE ( 'gribapi' ) !gribapicase
+!!
+!   CALL RDCMEMGRIBAPIINFO !gribapicase
 !
   CASE ( 'ascii' )
 !
   CALL RDCMEMASCIIINFO
 !
-  CASE ( 'netcdf' ) !netcdfcase
-!  
-  CALL RDCMEMNETCDFINFO !netcdfcase
+!  CASE ( 'netcdf' ) !netcdfcase
+!!
+!  CALL RDCMEMNETCDFINFO !netcdfcase
 !
 !  CASE ( 'ifs' )
 !!  
@@ -174,17 +174,17 @@ ALLOCATE ( fteffC(N,3) )
 !
 SELECT CASE (CFINOUT)
 !
-  CASE ('gribapi') !gribapicase
-!
-   CALL RDCMEMGRIBAPI !gribapicase
+!  CASE ('gribapi') !gribapicase
+!!
+!   CALL RDCMEMGRIBAPI !gribapicase
 !
   CASE ('ascii')
 !  
    CALL RDCMEMASCII
 !
-  CASE ('netcdf') !netcdfcase
-!
-   CALL RDCMEMNETCDF !netcdfcase
+!  CASE ('netcdf') !netcdfcase
+!!
+!   CALL RDCMEMNETCDF !netcdfcase
 !
 !  CASE ('ifs')
 !!
@@ -423,17 +423,17 @@ WRITE(NULOUT,*) 'CMEM_main, write output'
 
 SELECT CASE (CFINOUT)
 !
-  CASE ('gribapi') !gribapicase
-!
-     CALL WRCMEMGRIBAPI !gribapicase
+!  CASE ('gribapi') !gribapicase
+!!
+!     CALL WRCMEMGRIBAPI !gribapicase
 !
   CASE ('ascii')
 !
     CALL WRCMEMASCII
 !
-  CASE ('netcdf') !netcdfcase
-!
-    CALL WRCMEMNETCDF !netcdfcase
+!  CASE ('netcdf') !netcdfcase
+!!
+!    CALL WRCMEMNETCDF !netcdfcase
 !
 !  CASE ('ifs')
 !!

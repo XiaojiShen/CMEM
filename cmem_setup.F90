@@ -157,14 +157,14 @@ IF ( nlay_soil_ls .ne. nlay_soil_ls_default ) Then
 
  SELECT CASE (CFINOUT)
  !
-  CASE ('gribapi') !gribapicase
- !
-  DEALLOCATE(z_lsm) !gribapicase
-  ALLOCATE (z_lsm(nlay_soil_ls)) !gribapicase
-  OPEN(NULTMP,FILE='LSM_VERTICAL_RESOL.asc',status='old') !gribapicase
-  READ (NULTMP,*) (z_lsm(i),i=1,nlay_soil_ls)  !gribapicase
-  WRITE(NULOUT,*) ' GRIB IO: LSM layers depth: ',z_lsm(:) !gribapicase
-  CLOSE(NULTMP)    !gribapicase
+!  CASE ('gribapi') !gribapicase
+! !
+!  DEALLOCATE(z_lsm) !gribapicase
+!  ALLOCATE (z_lsm(nlay_soil_ls)) !gribapicase
+!  OPEN(NULTMP,FILE='LSM_VERTICAL_RESOL.asc',status='old') !gribapicase
+!  READ (NULTMP,*) (z_lsm(i),i=1,nlay_soil_ls)  !gribapicase
+!  WRITE(NULOUT,*) ' GRIB IO: LSM layers depth: ',z_lsm(:) !gribapicase
+!  CLOSE(NULTMP)    !gribapicase
  !
   CASE ('ascii')
  !
@@ -175,15 +175,15 @@ IF ( nlay_soil_ls .ne. nlay_soil_ls_default ) Then
   WRITE(NULOUT,*) ' ASCII IO: LSM layers depth: ',z_lsm(:)
   CLOSE(NULTMP)   
  !
-  CASE ('netcdf') ! netcdfcase
- !   
-  DEALLOCATE(z_lsm) ! netcdfcase
-  ALLOCATE (z_lsm(nlay_soil_ls)) ! netcdfcase
-  OPEN(NULTMP,FILE='LSM_VERTICAL_RESOL.asc',status='old') ! netcdfcase
-  READ (NULTMP,*) (z_lsm(i),i=1,nlay_soil_ls)  ! netcdfcase
-  WRITE(NULOUT,*) ' NETCDF IO: LSM layers depth: ',z_lsm(:) ! netcdfcase
-  CLOSE(NULTMP)    ! netcdfcase
- !
+!  CASE ('netcdf') ! netcdfcase
+! !
+!  DEALLOCATE(z_lsm) ! netcdfcase
+!  ALLOCATE (z_lsm(nlay_soil_ls)) ! netcdfcase
+!  OPEN(NULTMP,FILE='LSM_VERTICAL_RESOL.asc',status='old') ! netcdfcase
+!  READ (NULTMP,*) (z_lsm(i),i=1,nlay_soil_ls)  ! netcdfcase
+!  WRITE(NULOUT,*) ' NETCDF IO: LSM layers depth: ',z_lsm(:) ! netcdfcase
+!  CLOSE(NULTMP)    ! netcdfcase
+! !
  !CASE ('ifs')
  !
  !
