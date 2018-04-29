@@ -91,7 +91,7 @@ ALLOCATE (wcsoil(nlay_soil_mw))
 ! Interpolate the land surface model input on the MW model vertical resolution
 ! LSM variables: ftl_lsm,fwc_lsm,z_lsm,nlay_soil_ls
 ! MW  variables: tsoil,wcsoil,z,nlay_soil_mw
-zsoil(1) = z_lsm(1)
+zsoil(1) = z_lsm(1) ! depth of soil layers
 tsoil(1) = ftl_lsm(JJ,1) 
 wcsoil(1) = fwc_lsm(JJ,1)
 

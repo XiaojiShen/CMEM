@@ -56,7 +56,8 @@ SELECT CASE (CITEFF)
     ENDIF
   
   CASE ( 'Wigneron' )
-    C = MAX(0.001,(wc1/w0)**bw)
+    C = MAX(0.001,(wc1/w0)**bw) !   w0=0.41 : teff wign parameter (f(texture)) avignon (0.3) smosrex (0.33) ATBD (0.3)
+                                !   bw=0.35 : teff wign parameter (f(texture)) avignon (0.3) smosrex (0.63) ATBD (0.3)
   
   CASE ( 'Holmes' )
      tc = tsurf - tfreeze
@@ -84,7 +85,9 @@ SELECT CASE (CITEFF)
      ELSE 
        frostfrac = 0.
      ENDIF
-     eps = eps * (1.-frostfrac) + ef * frostfrac 
+     eps = eps * (1.-frostfrac) + ef * frostfrac ! ef=(5.0, 0.5): dielectric constant of frozen soil
+     ! eps_0=0.08 : permittivity of free & space (Klein and Swift) [Farads/meter]
+     ! bh=0.87 : teff holm parameter (f(texture)) smosrex (0.87)
      C = MAX(0.001_JPRM,MIN(1.0_JPRM,( ( aimag(eps) / real(eps) ) /eps0 )**bh))
      ! re-initialize eps and ew
      eps =(0.,0.)

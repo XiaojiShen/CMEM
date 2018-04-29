@@ -109,7 +109,7 @@ REAL(KIND = JPRM),ALLOCATABLE :: fNrv_H(:)
 REAL(KIND = JPRM),ALLOCATABLE :: ftau_veg(:,:)  
 REAL(KIND = JPRM),ALLOCATABLE :: ftth(:,:)
 REAL(KIND = JPRM),ALLOCATABLE :: fttv(:,:)
-REAL(KIND = JPRM),ALLOCATABLE :: fw_effL(:,:)
+REAL(KIND = JPRM),ALLOCATABLE :: fw_effL(:,:) ! effective scattering albedo
 REAL(KIND = JPRM),ALLOCATABLE :: fw_effH(:,:)
 REAL(KIND = JPRM),ALLOCATABLE :: fhrmodel(:,:)
 

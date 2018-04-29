@@ -74,7 +74,7 @@ SUBROUTINE ATMULABY
 ! Purpose :
 ! -------
 !   Calculate atmospheric opacity and up- and downwelling atmospheric 
-!   radiation for L-band
+!   radiation  bug
    
 !   24-Sept-2006 Thomas Holmes   *ECMWF*
 

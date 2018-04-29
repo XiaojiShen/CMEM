@@ -252,7 +252,7 @@ SELECT CASE (MASK(JJ))
   tair = ftair(JJ)
 !
 !
-  DO JCMEMTILE = 1, JPCMEMTILE 
+  DO JCMEMTILE = 1, JPCMEMTILE ! 1-7
 !
   IF (LGPRINT) WRITE(NULOUT,*) '--- Mean TEFF a',fteffC(JJ,:)
     IF (ftfrac(JJ,JCMEMTILE) == 0.)   CYCLE  
@@ -263,22 +263,22 @@ IF (LGPRINT) WRITE(NULOUT,*) '----------- Tile',JCMEMTILE
 ! 3.2 Compute surface emissivity    
 !
     SELECT CASE (JCMEMTILE)  
-      CASE ( 1,2 )
+      CASE ( 1,2 )  ! bare soil and that with snow
         Nrh = fNrh_L(JJ)
         Nrv = fNrv_L(JJ)
-        hrmodel = fhrmodel(JJ,1)
-        tsoildeep = ftl_lsm(JJ,nlay_soil_ls)
+        hrmodel = fhrmodel(JJ,1) ! Hr for low vegetation
+        tsoildeep = ftl_lsm(JJ,nlay_soil_ls) ! soil temperature
         CALL CMEM_SOIL
         IF (LGPRINT) WRITE(NULOUT,*) '--- Mean TEFF bf',&
           & ftfrac(JJ,JCMEMTILE),fteffC(JJ,1),t_eff(1),fteffC(JJ,2),t_eff(2),&
           & fteffC(JJ,3),t_eff(3)
         fteffC(JJ,:) = fteffC(JJ,:) + ftfrac(JJ,JCMEMTILE) * t_eff(:)
         IF (LGPRINT) WRITE(NULOUT,*) '--- Mean TEFF b',fteffC(JJ,:)
-      CASE ( 6 )
+      CASE ( 6 ) ! high vegetation with snow
         Nrh = fNrh_H(JJ)
         Nrv = fNrv_H(JJ)
-        hrmodel = fhrmodel(JJ,2)
-        tsoildeep = ftl_lsm(JJ,1)
+        hrmodel = fhrmodel(JJ,2) ! Hr for high vegetation
+        tsoildeep = ftl_lsm(JJ,1) ! soil temperature, why surface temperature ?
         CALL CMEM_SOIL
         IF (LGPRINT) WRITE(NULOUT,*) '--- Mean TEFF bf',&
           & ftfrac(JJ,JCMEMTILE),fteffC(JJ,1),t_eff(1),fteffC(JJ,2),t_eff(2),&

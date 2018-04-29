@@ -155,7 +155,7 @@ frho_b(:)= (fsand(:)*1.6_JPRM +  fclay(:)*1.1_JPRM + (100._JPRM-fsand(:)-fclay(:
 
 ! 3.2 porosity
 
-fp(:)= 1.0_JPRM - frho_b(:)/rho_s
+fp(:)= 1.0_JPRM - frho_b(:)/rho_s ! rho_s: soil specific density (g/cm3), ATBD 2.664
 
 
 ! 3.3 Wilting point, for Wang dielectric model
@@ -180,8 +180,8 @@ fteffC(:,:) = 0._JPRM
 ! 4. Water salinity
 ! ---------------------------------------------------------------------------
 
-WHERE ( fwater(:) < 0.5 )  fsal_wat(:) = sal_soil
-WHERE ( fwater(:) >= 0.5 )  fsal_wat(:) = sal_sea
+WHERE ( fwater(:) < 0.5 )  fsal_wat(:) = sal_soil ! =0
+WHERE ( fwater(:) >= 0.5 )  fsal_wat(:) = sal_sea ! =32.5
 !
 !
 ! ---------------------------------------------------------------------------
