@@ -1,0 +1,246 @@
+######################################################################################
+#
+#    #####   #     #   ####   #     #
+#    #       ##   ##   #      ##   ##
+#    #       #  #  #   ##     #  #  #
+#    #       #     #   #      #     #
+#    #####   #     #   ####   #     #
+#
+#  copyright ECMWF 
+#  CMEM ascii I/O
+#
+#########################################################################################
+# Main programm is smos_main.F90
+# input files: forcing*
+# input config: input (configuration of namelists)
+# output files: out*
+#########################################################################################
+#
+# FIELD DIMENSION (number of lines in input files) MUST BE: 
+# IDENTICAL FOR EACH FILE (N) IN CASE LOFIELDEXP is SET TO .FALSE.
+# IDENTICAL FOR EACH FILE (N) EXCEPT FOR VEGETATION AND SOIL FILES IN CASE LOFIELDEXP is SET TO .TRUE. 
+#
+##########################################################################################
+#2- Prepare the forcing file according to your run config. Here ascii input required
+# Each name of input file starts with 'forcing' 
+# forcing files must be consistent in terms of number of inputs (checked in rdcmemasciiinfo.F90)
+# example of foring file is provided for a time serie of 8784 values
+# Mandatory input files when default options (nb_line_exple forcing file):
+#   8784 forcing_cmem_main.asc             ! time serie required
+#   8784 forcing_cmem_tair.asc             ! time serie required
+#   8784 forcing_cmem_lai-ecoclimap.asc    ! time serie required
+#      1 forcing_cmem_veg-ecoclimap_constant.asc  ! cst(1 pixel, when opt LOFIELDEXP=.True.)
+#      1 forcing_cmem_soil_constant.asc    ! constant (1 pixel, when opt LOFIELDEXP=.True.)
+
+# optional files (nb_line_exple forcing file):
+#      1 forcing_cmem_veg-tessel_constant.asc   ! veg type (tessel) cst (1 pixel, opt LOFIELDEXP=.True.)
+
+#  FORCING FILES IN ASCII    --->    put option CFINOUT='ascii' in file 'input'
+#
+# contain required forcing for CMEM
+# Dates are expressed as YYYY (year), MM (month), DD (Day) and DOY (idecimal Day of year)
+# Hour is in HHMM (hour Minutes)
+# Grid point number is indicated (stay 1 if only 1 pixel considered)
+# File forcing_cmem_main.asc contains N lines which is the number of pixels for which Tb is computed.
+# N results from Nb_gridpoint * nbtimestep
+
+############################################
+#1) Meteo (Dimension of vectors= number of lines= N)
+#1 file required for any option:
+############################################
+#forcing_cmem_main.asc  
+#N lines 13 columns 
+
+GRIDPOINT: first 3 col might contain any information. Not used in CMEM, but writen in output files. 
+YYYMMDD  :  
+HHMM     : 
+FWC		: soil moisture level1 (m3/m3)
+FWC2	: soil moisture level2 (m3/m3)
+FWC3	: soil moisture level3 (m3/m3)
+FTSKIN	: Skin temperature (K)
+FTSURF	: Soil temperature level1 (K)
+FTL2	: Soil temperature level2 (K)
+FTDEEP	: Soil temperature level3 (K)
+FSNOWD	: Snow Depth (m of equivalent water)
+FRSNOW	: SNOW Density (kg/m3)
+DOY     : Day of Year. Will be used in output file
+
+
+###############################################################
+#2.1)  soil conditions
+#1 file Required. 
+#File differs depending on option LOFIELDEXP:
+################################################################
+
+#Either (i) or (ii) 
+# (i) forcing_cmem_soil_constant.asc (NB LINE = 1) 
+# option LOFIELDEXP = .TRUE.   Field experiment (1 grid point)
+# in this case only 1 pixel is considered and soil parameters are constant. This option allows
+# providing only once the constant soil parameters
+
+# forcing_cmem_soil_constant.asc
+# 1 line, 3 columns: 
+
+ZSAND	: Sand fraction (%)
+ZCLAY	: Clay fraction (%)
+fZ		: geopotential at surface  (m2/s2)
+
+#or
+# (ii) forcing_cmem_soil.asc (NB LINES = N)
+# option LOFIELDEXP = .FALSE.   Not field experiment 
+# in this case several pixels may be considered. N values are required as in main forcing file.
+
+# forcing_cmem_soil.asc
+ N lines, 3 columns: 
+
+GRIDPOINT 
+YYYMMDD 
+HHMM
+ZSAND	: Sand fraction (%)
+ZCLAY	: Clay fraction  (%)
+fZ		: geopotential at surface  (m2/s2)
+
+
+##########################################################
+2.1 Vegetation
+1 file required for any option
+Required file depends on options LOFIELDEXP and CIDVEG:
+##########################################################
+#(i) forcing_cmem_veg-tessel_constant.asc  or forcing_cmem_veg-ecoclimap_constant.asc
+#or
+#(ii) forcing_cmem_veg-tessel.asc  or  forcing_cmem_veg-ecoclimap.asc
+
+# (i) 
+# option LOFIELDEXP = .TRUE.   Field experiment (1 grid point)  (NBLINE =1)
+# in this case only 1 pixel is considered and land cover type. This option allows
+# providing only once the constant vegetation parameters
+# Both forcing_cmem_veg-tessel_constant.asc and forcing_cmem_veg-ecoclimapi_constant.asc
+#
+# CIDVEG = 'Tessel'
+# forcing_cmem_veg-tessel_constant.asc 
+# 1 line, 5 columns: 
+
+ZFTVL	: Low vegetation type following Tessel classification
+ZTVH 	: High vegetation type following Tessel classification
+zfvegl	: Low vegetation fraction (-)
+zfvegh	: High vegetation fraction (-)
+zfwater	: Water fraction (-)
+#
+# CIDVEG = 'Ecoclimap'
+# forcing_cmem_veg-ecoclimap_constant.asc 
+# 1 line, 5 columns: 
+
+ZFTVL	: Low vegetation type following ECOCLIMAP-ECMWF classification
+ZTVH 	: High vegetation type following ECOCLIMAP-ECMWF classification
+zfvegl	: Low vegetation fraction (-)
+zfvegh	: High vegetation fraction (-)
+zfwater	: Water fraction (-)
+
+
+
+# (ii) 
+# option LOFIELDEXP = .FALSE.   Not a field experiment (NBLINE= N) 
+# in this case several pixels might be considered and N values of land cover type are required.
+# 
+# CIDVEG = 'Tessel'
+# forcing_cmem_veg-tessel.asc 
+# N lines, 8 columns: 
+
+GRIDPOINT 
+YYYMMDD 
+HHMM
+ZFTVL	: Low vegetation type following Tessel classification
+ZTVH 	: High vegetation type following Tessel classification
+zfvegl	: Low vegetation fraction
+zfvegh	: High vegetation fraction
+zfwater	: Water fraction
+
+# CIDVEG = 'Ecoclimap'
+# forcing_cmem_veg-ecoclimap.asc 
+# N lines, 8 columns: 
+
+GRIDPOINT 
+YYYMMDD 
+HHMM
+ZFTVL	: Low vegetation type following ECOCLIMAP-ECMWF classification
+ZTVH 	: High vegetation type following ECOCLIMAP-ECMWF classification
+zfvegl	: Low vegetation fraction
+zfvegh	: High vegetation fraction
+zfwater	: Water fraction
+
+
+#### Useful information:
+# ECOCLIMAP types are:
+#No vegetation: 0
+#High vegetation: 1 Decidious forests; 2 Coniferous forests; 3 Rain forests 
+#Low vegetation: 4 C3 Grasslands; 5 C4 Grasslands; 6 C3 Crops; 7 C4 Crops
+
+# TESSEL types are:
+#High vegetation: 3 Evergreen Needleleaf Trees; 4 Deciduous Needleleaf Trees; 5 eciduous Broadleaf Trees; 
+#                 6  Evergreen Broadleaf Trees; 18 Mixed Forest/woodland; 19 Interrupted Forest
+#Low vegetation:  1 Crops, Mixed Farming; 2 Short Grass; 7 Tall Grass; 9 Tundra; 10 Irrigated Crops; 
+#                 11 Semidesert; 13 Bogs and Marshes; 16 Evergreen Shrubs; 17 Deciduous Shrubs; 20 Water and Land Mixtures 
+
+# Vegetation tables are provided in vegtable.F90
+
+
+#########################################
+# 2.2  VEGETATION LAI   (N LINES)
+# 1 file if Ecoclimap
+# 0 file if tessel
+###########################################
+
+# CIDVEG = 'Tessel'
+# no input file required
+
+# CIDVEG = 'Ecoclimap'
+# forcing_cmem_lai.asc
+# 6 columns N lines
+
+GRIDPOINT 
+YYYMMDD 
+HHMM
+fs_laiL 	: LAI Low vegetation type
+zlaiH  		: LAI High vegetation type. input not used in CMEM.
+DOY
+
+
+##########################################
+# For Otpion CITVEG = 'Tair' or Otpion CIATM='Pellarin' or CIATM='Ulaby' (in input) 
+# vegetation temperature is set equal to Tair
+# 1 file required for this option
+# forcing_cmem_tair.asc
+# N lines 5 columns:
+
+GRIDPOINT  
+YYYYMMDD  
+HHMM  
+ftair	: 2m air temperature (K)
+DOY
+
+###############################################
+# Vertical discretization in CMEM
+
+# CMEM considers two vertical grids:
+
+ #1- Land Surface Model vertical resolution for soil moisture
+ # and soil temperature profiles (read by CMEM in rdcmem*) 
+ # Default soil layers depths are given in cmem_setup.F90
+ # NLAY_SOIL_LS=3 and soil depths z_lsm(:) defined
+ # the deepest layer define the depth of the soil column
+ # If you want to enter an other input vertical grid:
+ # 	* define in the input file NLAY_SOIL_LS
+ #  * add a file called LSM_VERTICAL_REOL.asc with depth of each layer
+ # (see example for wilheit in io_sample)
+
+ #2- Microwave fine vertical grid: 
+ # a: With CISMR='Fresnel' (default) the number of layer is one (NLAY_SOIL_MW=1)
+ # b: CISMR='Wilheit' must be selected in the file 'input' to allow multi-layer MW emission modelling 
+ # by default it uses NLAY_SOIL_MW=10 layers in cmem_setup.F90
+ # to change it, give a value to NLAY_SOIL_MW in the input file
+ # the layer thicknesses are computed automatically in cmem_soil.F90
+ # the input sm and st profiles read in rdcmem* are interpolated to the 
+ # NLAY_SOIL_MW layers and used in wilheit
+
+
+

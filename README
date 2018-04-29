@@ -1,0 +1,124 @@
+######################################################################################
+#
+#    #####   #     #   ####   #     #
+#    #       ##   ##   #      ##   ##
+#    #       #  #  #   ##     #  #  #
+#    #       #     #   #      #     #
+#    #####   #     #   ####   #     #
+# Community Microwave Emission Modelling Platform
+#
+#  Copyright 2006-2014 ECMWF
+# 
+#########################################################################################
+# To run CMEM you need:
+#  - FORTRAN (e.g. gfortran),
+#  - GRIBAPI,
+#  - NETCDF. 
+# GRIBAPI is at https://software.ecmwf.int/wiki/display/GRIB/Home 
+# NETCDF is avalable on http://www.unidata.ucar.edu/software/netcdf/
+##################################################
+#If you want remove NetCDF and GribAPI options (e.g. because not installed on your computer):
+-1- in cmem_main.F90 and cmem_setup: comment or remove all the lines that contain the comment 'netcdfcase' and/or 'gribapicase' 
+-2- in Makefile: remove gribapi and/or netcdf routines and libraries
+
+#########################################################################################
+# GRIBAPI ('gribapi' option) enables to read/write grib files. 
+# GribAPI is the new set of programs developed for encoding and decoding WMO FM-92 GRIB
+#
+#
+#The 'gribapi' is used by default in CMEM because: 
+#  (i) it enables to read both Grib1 and Grib2, 
+# (ii) it is flexible in terms of coding,
+#(iii) it is used in the ECMWF IFS.
+#
+#When using the gribapi option, CMEM needs to have a template file to write the outputs. 
+#To this end you need to copy SWVL1.grib into SWVL1.tmpl (see README_CMEM_GRIB.TEX)
+#
+# Important note on how to run cmem with gribapi. Before running cmem, do
+# setenv GRIB_TEMPLATES_PATH /YourPathWhereTemplateFileIs/
+#
+#
+#########################################################################################
+# Main programm is cmem_main.F90
+# input files: forcing*.asc for ascii inputs  or *.grib for  gribapi input or *,nc for netcdf input
+# input config: input (configuration of namelists)
+# output files: out*
+#########################################################################################
+# To use CMEM do:
+ make  # Compile CMEM. Requiere to update the Makefile to your system.
+./cmem # run CMEM
+#########################################################################################
+
+1- choose/modify the config of your run in the file named "input":
+During the simulation, your options will be read  and checked in sucmem.F90
+
+1.1 physical config:
+
+&NAMOPT CIDIEL=,         # idefault is 'Wang', can be also 'Dobson' or 'Mironov'
+       CITEFF=,          # default is 'Wigneron', can be also 'Tsoil' 'Choudhury' 'Holmes'
+       CISMR=,           # default is 'Fresnel', can be also 'Wilheit'
+       CIRGHR=,          # default is 'Wsimple', can be also 'No',
+                          #'Choudhury','Wsimple','Wegmueller','Wtexture','ATBD',
+       CIVEG='Wigneron', # default is 'Wigneron', can be also 'No','Kirdyashev,'Wegmueller'
+       CIATM='Pellarin',   # default is 'Pellarin
+       CITVEG=,            # defaults is 'Tsurf', can be also 'Tair' or 'Tir'
+       CIDVEG='Ecoclimap', # defaults is 'Ecoclimap', can be also 'HTessel' or 'Tessel'
+       CITDIEL=,           # defaults is 'Teff', can be also  'Tsurf
+
+1.2 Observing configuration:
+&NAMRAD FGHZ=,             # default is 1.4 GHz. Consistency between FGHZ and other options is checked in sucmem.F90
+        THETA=,            # default is 50 degrees
+
+1.3 Soil and atm levels configuration:
+&NAMLEV NLAY_SOIL_MW=,         # number of soil layers in the microwave model (default is 1) 
+        NLAY_SOIL_LS=,         # number of soil layers in the forcing data set (e.g. land surface model)
+                               # default is 3 defined in cmem_setup.F90
+
+1.4 simulation configuration:
+&NAMDEF LOFFCMEM=,          # Default is .True. offline from IFS (use local yomlun*F90 and parkind1.F90)
+        LOFIELDEXP=.FALSE., # Default is false. True for field expts: 
+                            # allows not considering upward atm emission (keeping downward
+                            # emission/ and reflex) and allows providing constant values for 
+                            # soil texture and veg type when only 1pixel is considered
+                            #(see README_CMEM_ASCII.TEX for forcing files)
+        LGPRINT=,           # default is .False.. Set to true if more infor needed
+        JPHISTLEV=1,        # defines the level of outputs:
+                            # (1) only TB and Teff,
+                            # (2) level1 + tot bare soil fraction, VWC, atm opt depth, tb atm up
+                            # (3) level 1+ level2+ pure (no snow) bare soil frac, 
+                            # low veg frac, high veg frac, + several param, and emissivities H and V
+        CFINOUT='gribapi',  # default is 'gribapi', can be 'netcdf' or 'ascii'. Here ascii version
+        LOMASK_OCEAN=.False.# mask water bodies and return 'o' values on these points. Can be set to True
+        LOMASK_AUTO=.True.  # Mask grid point with non possible values of soil temperature or moisture. Can be put True
+
+
+
+##########################################################################################
+2- Prepare the forcing file according to your run config. 
+###############################################
+#3- Vertical discretization in CMEM
+
+# CMEM considers two vertical grids:
+
+ #1- Land Surface Model vertical resolution for soil moisture
+ # and soil temperature profiles (read by CMEM in rdcmem*) 
+ # Default soil layers depths are given in cmem_setup.F90
+ # NLAY_SOIL_LS=3 and soil depths z_lsm(:) defined
+ # the deepest layer define the depth of the soil column
+ # If you want to enter an other input vertical grid:
+ # 	* define in the input file NLAY_SOIL_LS
+ #  * add a file called LSM_VERTICAL_REOL.asc with depth of each layer
+ # (see example for wilheit in io_sample)
+
+ #2- Microwave fine vertical grid: 
+ # a: With CISMR='Fresnel' (default) the number of layer is one (NLAY_SOIL_MW=1)
+ # b: CISMR='Wilheit' must be selected in the file 'input' to allow multi-layer MW emission modelling 
+ # by default it uses NLAY_SOIL_MW=10 layers in cmem_setup.F90
+ # to change it, give a value to NLAY_SOIL_MW in the input file
+ # the layer thicknesses are computed automatically in cmem_soil.F90
+ # the input sm and st profiles read in rdcmem* are interpolated to the 
+ # NLAY_SOIL_MW layers and used in wilheit
+
+
+
+
