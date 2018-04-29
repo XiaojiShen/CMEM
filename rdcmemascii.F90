@@ -85,7 +85,7 @@ READ (NULTMP,*) nbpt(JJ), ndate(JJ),ntime(JJ),(fwc_lsm(JJ,i),i=1,nlay_soil_ls),f
 ENDDO 
 CLOSE(NULTMP)
 
-
+! set negative values to zero
 fsnowd(:) = MAX(1.e-2_JPRM,fsnowd(:))
 WHERE(fsnowd == 1.e-2_JPRM) fsnowd(:) = 0.0
 
@@ -137,7 +137,7 @@ SELECT CASE (LOFIELDEXP)
        ! Update the mask to eliminate unrealistic points
        SELECT CASE (LOMASK_AUTO)
          CASE (.True.)
-         WHERE (fZ > 9.0_JPRM .or. fZ < -1.0_JPRM ) mask = 0_JPIM  ! unexpected elevation on the Earth
+         WHERE (fZ > 9.0_JPRM .or. fZ < -1.0_JPRM ) mask = 0_JPIM  ! unexpected elevation on the Earth, bug? zfZ?
        END SELECT
 
        SELECT CASE (CIDVEG)
@@ -266,7 +266,7 @@ END SELECT
 ! 2.3  Calculate tile fractions
 !------------------------------
 
-    fvegl(:) =  fvegl(:) * cvegl(:)      
+    fvegl(:) =  fvegl(:) * cvegl(:)   ! low vegetation: vegetation fraction * vegetation cover for the type
     fvegh(:) =  fvegh(:) * cvegh(:)
     fbare(:) = 1. - fvegl(:) - fvegh(:)  
 
@@ -275,7 +275,7 @@ END SELECT
     WHERE (  fsnowd(:) > 0.0_JPRM) sncov(:) = 1.0_JPRM  
     WHERE (  fsnowd(:) <= 0.0_JPRM) sncov(:) = 0.0_JPRM  
 
-
+    ! fractions for 7 types of tile
     ftfrac(:,1) = fbare(:) * (1. - fwater(:)) * (1.-sncov(:)) ! bare soil 
     ftfrac(:,2) = fbare(:) * (1. - fwater(:)) * sncov(:)      ! bare soil with snow   
     ftfrac(:,3) = fvegl(:) * (1. - fwater(:)) * (1.-sncov(:)) ! low veg
@@ -305,7 +305,7 @@ END SELECT
 !-------------------------------------------------------------------
 
 
-SELECT CASE (CITVEG)
+SELECT CASE (CITVEG) ! bug: Tir tvege=tskin
 
    CASE ('Tair')
 

@@ -281,7 +281,7 @@ SELECT CASE (CITEFF)
       WRITE(NULOUT,*) '*WARNING* Choudhury model neglects the strong soil moisture'
       WRITE(NULOUT,*) '          effect on sensing depth at Frequencies below 2.5 GHZ'
     ENDIF
-  CASE ( 'Wigneron','Holmes' ) 
+  CASE ( 'Wigneron','Holmes' )
     IF ( fghz>2.5 ) THEN
       WRITE(NULOUT,*) '*WARNING* Effective temperature model calibrated for L-band Frequencies'
       WRITE(NULOUT,*) '          CITEFF set to Choudhury'

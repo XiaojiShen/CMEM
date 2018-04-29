@@ -15,7 +15,7 @@ MODULE YOMCMEMFIELDS
 ! ftveg : Canopy temperature (K)
 ! ftskin : Skin Temperature (K)
 ! ftl_lsm : Soil Temp on land surface model (lsm) layers (K)
-! fwc_lsm : water content of soil on the lsm layers [m3/m3]
+! fwc_lsm : water content of soil on the lsm (:,1-nlay_soil_ls) layers [m3/m3]
 
 ! ftb_soil  surface brightness temperature (K)
 ! ftb_toa  TOA brightness temperature (K)
@@ -35,8 +35,8 @@ MODULE YOMCMEMFIELDS
 ! fsnowd : snow depth, water equivalent (m)
 ! frsnow : snow density (kg/m3)
 ! fLSM(:)   
-! fTVL(:)    
-! fTVH(:)    
+! fTVL(:)  type for low vegetation
+! fTVH(:)  type for high vegetation
 ! ftfrac(:,:)  
 ! fwater : water fraction (0-1)
 ! mask(:) : point on which TB is going to be computed (1), or masked (0)

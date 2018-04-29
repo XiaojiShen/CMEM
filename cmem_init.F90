@@ -225,9 +225,9 @@ SELECT CASE (CIRGHR)
     fhrmodel(:,1) = fh(:)  ! on low veg
     fhrmodel(:,2) = fh(:)  ! on high veg 
   CASE ( 'Wigneron' )   !    Wigneron (see NOTICE file)
-     fhrmodel(:,1) = Zhr(fTVL(:))
+     fhrmodel(:,1) = Zhr(fTVL(:))  ! constant empirical roughness parameters for different vegetation type
      fhrmodel(:,2) = Zhr(fTVH(:))
-     WHERE ( fTVL(:) == 4_JPIM )  fhrmodel(:,1) = 1.3_JPRM - 1.13_JPRM *  fwc_lsm(:,1)
+     WHERE ( fTVL(:) == 4_JPIM )  fhrmodel(:,1) = 1.3_JPRM - 1.13_JPRM *  fwc_lsm(:,1) ! grassland
      WHERE ( fTVL(:) == 5_JPIM )  fhrmodel(:,1) = 1.3_JPRM - 1.13_JPRM *  fwc_lsm(:,1)
 
 END SELECT
