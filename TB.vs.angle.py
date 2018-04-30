@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 # 1. set up table
 def settable(f, CNAMEID, doy):
     filelist = glob.glob('out_tbtoat_'+CNAMEID+'_'+f+'_*.asc')
-    # if len(filelist) == 0:
-    #     raise('read filelist error!')
+    if len(filelist) == 0:
+        raise('read filelist error!')
     tbvsangle = pd.DataFrame()
     for file in filelist:
         angle = int(file[-6:-4])
@@ -32,7 +32,7 @@ def settable(f, CNAMEID, doy):
 
 # 3. plotting
 f = '014'  # frequency
-CNAMEID = 'MiHoFrWsKiPeTsEc'  # model options
+CNAMEID = 'MiWiFrWsWiPeTsHT'  # model options
 doy = '220.67'
 tbondate = settable(f, CNAMEID, doy)
 plt.scatter(tbondate['angle'], tbondate['TBH(K)'], s=10, label=str(int(f)/10)+' GHz H')

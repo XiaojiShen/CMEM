@@ -188,7 +188,7 @@ TILE: SELECT CASE (JCMEMTILE)
       CASE ( .TRUE. )  ! water is pure ice
         CALL DIEL_ICE (t_eff(2),ew)
       CASE DEFAULT
-        medium = 1
+        medium = 1 ! sea water
         isal = 2
         CALL DIEL_WAT (medium,isal,t_eff(2)-tfreeze,sal_wat,ew)
     END SELECT
@@ -235,7 +235,7 @@ IF (LGPRINT) WRITE(NULOUT,*) '--- cmem soil 2A.3:', ew,t_eff(:)
             CALL DIEL_ICE (tc+tfreeze,ew)
           CASE DEFAULT ICE
             isal = 2
-            medium = 2
+            medium = 2 ! soil water
             CALL DIEL_WAT (medium,isal,tc,sal_soil,ew)
         END SELECT ICE
         ! dielectric of surface medium    

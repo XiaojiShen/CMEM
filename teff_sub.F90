@@ -86,6 +86,7 @@ SELECT CASE (CITEFF)
        frostfrac = 0.
      ENDIF
      eps = eps * (1.-frostfrac) + ef * frostfrac ! ef=(5.0, 0.5): dielectric constant of frozen soil
+
      ! eps_0=0.08 : permittivity of free & space (Klein and Swift) [Farads/meter]
      ! bh=0.87 : teff holm parameter (f(texture)) smosrex (0.87)
      C = MAX(0.001_JPRM,MIN(1.0_JPRM,( ( aimag(eps) / real(eps) ) /eps0 )**bh))

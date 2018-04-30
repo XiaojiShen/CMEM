@@ -190,7 +190,7 @@ WHERE ( fwater(:) >= 0.5 )  fsal_wat(:) = sal_sea ! =32.5
 !
 SELECT CASE (CIRGHR)
   CASE ( 'No' )
-    fh(:) = 0._JPRM
+    fh(:) = 0._JPRM ! fh(N)
     fhrmodel(:,:) = 0._JPRM
   CASE ( 'Choudhury' )
     fh(:) = (2._JPRM * kcm * ip_rgh_surf) ** 2._JPRM

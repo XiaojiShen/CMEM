@@ -255,7 +255,7 @@ SELECT CASE (MASK(JJ))
   DO JCMEMTILE = 1, JPCMEMTILE ! 1-7
 !
   IF (LGPRINT) WRITE(NULOUT,*) '--- Mean TEFF a',fteffC(JJ,:)
-    IF (ftfrac(JJ,JCMEMTILE) == 0.)   CYCLE  
+  IF (ftfrac(JJ,JCMEMTILE) == 0.)   CYCLE
 !
 IF (LGPRINT) WRITE(NULOUT,*) '----------- Tile',JCMEMTILE
 !
@@ -272,7 +272,7 @@ IF (LGPRINT) WRITE(NULOUT,*) '----------- Tile',JCMEMTILE
         IF (LGPRINT) WRITE(NULOUT,*) '--- Mean TEFF bf',&
           & ftfrac(JJ,JCMEMTILE),fteffC(JJ,1),t_eff(1),fteffC(JJ,2),t_eff(2),&
           & fteffC(JJ,3),t_eff(3)
-        fteffC(JJ,:) = fteffC(JJ,:) + ftfrac(JJ,JCMEMTILE) * t_eff(:)
+        fteffC(JJ,:) = fteffC(JJ,:) + ftfrac(JJ,JCMEMTILE) * t_eff(:) ! accumulated teff for all the 7 types of tile
         IF (LGPRINT) WRITE(NULOUT,*) '--- Mean TEFF b',fteffC(JJ,:)
       CASE ( 6 ) ! high vegetation with snow
         Nrh = fNrh_H(JJ)
@@ -327,8 +327,8 @@ IF (LGPRINT) WRITE(NULOUT,*) '----------- Tile',JCMEMTILE
 !
     SELECT CASE (JCMEMTILE)  
       CASE ( 3, 4 )  ! Low vegetation
-        w_eff(:) = fw_effL(JJ,:) 
-        a_geo = a_geoL 
+        w_eff(:) = fw_effL(JJ,:) ! effective scattering albedo
+        a_geo = a_geoL ! =0.33, LOW vegetation structure coefficient
         wc_veg =  fwc_veg(JJ,1)
         bj =  fb(JJ,1)
         tauN = ftauN(JJ,1)
@@ -337,7 +337,7 @@ IF (LGPRINT) WRITE(NULOUT,*) '----------- Tile',JCMEMTILE
         IF (tb_veg(1) == 0.)  CALL CMEM_VEG   
      CASE ( 5 )  ! High vegetation
         w_eff(:) = fw_effH(JJ,:)
-        a_geo = a_geoH 
+        a_geo = a_geoH ! =0.66, HIGH vegetation structure coefficient
         wc_veg = fwc_veg(JJ,2)
         bj =  fb(JJ,2)
         tauN = ftauN(JJ,2)

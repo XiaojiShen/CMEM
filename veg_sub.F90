@@ -139,7 +139,7 @@ IMPLICIT NONE
 
 
 ! 1. Polarized vegetation optical depth
-!    ----------------------------------
+!    tth, ttv: 1.0, 2.0 for C3 crop; 2.0, 1.0 for C4 crop.
 tau_veg(1) = tauN * (costheta**2 + ttH * sintheta**2)
 tau_veg(2) = tauN * (costheta**2 + ttV * sintheta**2)
 
