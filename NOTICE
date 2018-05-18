@@ -22,18 +22,20 @@ References to scientific peer reviewed journals:
     'Mironov' relies on parameterisation:
      Mironov et al: Generalized Refractive Mixing Dielectric Model for moist soil
      IEEE Trans. Geosc. Rem. Sens., vol 42 (4), 773-785. 2004.
+	
+	Mironov, V. L., et al. (2009). "Physically and mineralogically based spectroscopic dielectric model for moist soils." IEEE Transactions on Geoscience & Remote Sensing 47(7): 2059-2070.
 
 
 2- Effective temperature (CITEFF): teff_sub.F90 codes rely on paramaterisations:
 
     'Choudhury' relies on parameterisation:
      Choudhury, B., T. Schmugge, and T. Mo (1982), A parameterization of effective 
-     soil temperature for microwave emission, J. Geophys. Res., 87, 1301â€“1304
+     soil temperature for microwave emission, J. Geophys. Res., 87, 1301â€?304
 
     'Wigneron'relies on parameterisation:
      Wigneron, J.-P., L. Laguerre, and Y. Kerr (2001), A simple parmeterization 
      of the L-band microwave emission from rough agricultural soils, IEEE Trans. 
-     Geosci. Remote. Sens., 39, 1697â€“1707.
+     Geosci. Remote. Sens., 39, 1697â€?707.
 
     'Holmes' relies on parameterisation:
      Holmes, T. R. H., P. de Rosnay, R. de Jeu, R. J.-P. Wigneron, Y. Kerr, J.-C. 
@@ -65,7 +67,7 @@ References to scientific peer reviewed journals:
     'Wsimple' relies a parameterisation described in:
      Wigneron, J.-P., L. Laguerre, and Y. Kerr, 2001: A Simple Parmeterization 
      of the L-band Microwave Emission from Rough Agricultural Soils. 
-     IEEE Trans. Geosc. Remote Sens., 39, 1697â€“1707.
+     IEEE Trans. Geosc. Remote Sens., 39, 1697â€?707.
 
     'Wegmueller' relies on parameterisation:
      Wegmueller and Maetzler, 1999: Rough bare soil reflectivity model,
@@ -74,14 +76,14 @@ References to scientific peer reviewed journals:
     'Wtexture' relies on a parameterisation described in:
      Wigneron, J.-P., L. Laguerre, and Y. Kerr, 2001: A Simple Parmeterization 
      of the L-band Microwave Emission from Rough Agricultural Soils. 
-     IEEE Trans. Geosc. Remote Sens., 39, 1697â€“1707.
+     IEEE Trans. Geosc. Remote Sens., 39, 1697â€?707.
 
     'Wigneron' relies on a parameterisation described in:
      . Wigneron, J.-P., Y. Kerr, P. Waldteufel, K. Saleh, M.-J. Escorihuela, 
      P. Richaume, P. Ferrazzoli, P. de Rosnay, R. Gurney, J.-C. Calvet, 
      M. Guglielmetti, B. Hornbuckle, C. MÂ¨atzler, T. Pellarin, and M. Schwank, 2007: 
      L-band Microwave Emission of the Biosphere (L-MEB) Model: description and calibration against
-     experimental data sets over crop fields. Remote sens. environ., 107, 639â€“655.
+     experimental data sets over crop fields. Remote sens. environ., 107, 639â€?55.
      . Saleh K., Wigneron J.-P., de Rosnay P., Calvet J.-C., Escorihuela M.J., Kerr Y., 
      Waldteufel P. : Â«Impact of rain interception by vegetation and mulch on the L-band 
      emission of natural grassÂ» Remote Sensing of Environment, 101, 127-139, 2006
@@ -106,7 +108,7 @@ References to scientific peer reviewed journals:
     . Grant, J. P., Wigneron, J. -P., Van de Griend, A. A., Schmidl SÃ¸bjÃ¦rg, S., Skou,
      N., & Balling, J. (2007). Bray-2004 L-band radiometric field experiment in
      the Les Landes forest: microwave signal behaviour for varying conditions of
-     ground moisture. Remote Sensing of Environment, 107, 639âˆ’655.
+     ground moisture. Remote Sensing of Environment, 107, 639âˆ?55.
      .Wigneron, et al., "A simple algorithm to retrieve soil moisture 
      and vegetation biomass using passive microwave measurements 
      over crop fields," Remote sens. environ., vol. 51, pp. 331-341, 1995.
@@ -119,7 +121,7 @@ References to scientific peer reviewed journals:
 
     'Pellarin' relies on:
      Pellarin, T., et al. (2003), Two-year global simulation of L-band brightness
-     temperature over land, IEEE Trans. Geosci. Remote Sens., 41, 2135â€“2139.
+     temperature over land, IEEE Trans. Geosci. Remote Sens., 41, 2135â€?139.
 
     'Ulaby' relies on:
      Ulaby FT, R. K. Moore, and A. K. Fung, Microwave Remote Sensing:
@@ -155,7 +157,7 @@ HUT Snow emission model
 Fortran code for snow emission model was supplied by agreement with FMI,
 and re-written to be included in CMEM.
 Pulliainen, J., M. Hallikainen, and J. Grandell, 1999: HUT snow emission model and its applicability to snow
-water equivalent retrieval. IEEE Trans. Geos. Remot. Sens, 37, 1378â€“1390.
+water equivalent retrieval. IEEE Trans. Geos. Remot. Sens, 37, 1378â€?390.
 
 cmem_snow.F90 Updated to include a new part of code for snow grain size function as described in 
 Boone  A., Description du schema de neige ISBA-ES (Explicit Snow), CNRM, Meteo France, 2009

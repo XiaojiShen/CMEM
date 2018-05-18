@@ -8,6 +8,7 @@
 !
 SUBROUTINE DIEL_WAT (medium,isal,T,sal,ew)
 
+! REF: Ulaby 1986, Appendix E-2
 ! Purpose : 
 !   Calculate dielectric constant of water in three different media : 
 !   pure water, sea water, soil water
@@ -84,7 +85,7 @@ SELECT CASE (medium)
   CASE ( 0 ) ! pure water
     eps_w0 = 88.045_JPRM - 0.4147_JPRM * T + 6.295e-4_JPRM * T**2_JPRM + 1.075e-5_JPRM * T**3_JPRM 
     ew = eps_winf + (eps_w0 - eps_winf) / (1. - j * omega * tau_w)
-    
+
   CASE ( 1 )
     CALL ION_CONDUCT (T,sal,sigma)
     ! Debye expression '41
@@ -99,7 +100,7 @@ SELECT CASE (medium)
     
     ! Modified Debye expression, Dobson '85
     !IF (wc < 0.001_JPRM) wc = 0.001_JPRM     ! to avoid dividing by zero
-     wc = MAX(0.001_JPRM, wc)  ! to avoid dividing by zero
+    wc = MAX(0.001_JPRM, wc)  ! to avoid dividing by zero
     ew = eps_winf + (eps_sw0 - eps_winf) / (1._JPRM - j * omega * tau_sw)  &
          + j * sigma_eff / (omega * eps_0) * (rho_s - rho_b) / (rho_s * wc)
 

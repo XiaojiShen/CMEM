@@ -32,7 +32,7 @@ def settable(f, CNAMEID, doy):
 
 # 3. plotting
 f = '014'  # frequency
-CNAMEID = 'MiWiFrWsWiPeTsHT'  # model options
+CNAMEID = 'MiWiFrChKiPeTsHT'  # model options
 doy = '220.67'
 tbondate = settable(f, CNAMEID, doy)
 plt.scatter(tbondate['angle'], tbondate['TBH(K)'], s=10, label=str(int(f)/10)+' GHz H')

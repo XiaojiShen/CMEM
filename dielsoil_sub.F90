@@ -10,7 +10,7 @@
 ! Models to calculate the dielectric constant of a soil medium following:
 !   1. Wang and Schmugge
 !   2. Dobson 
-!   3. Mironov
+!   3. Mironov bug 2004 and 2009
 !---------------------------------------------------------------------------
 
 SUBROUTINE DIELWANG (ew)
@@ -112,7 +112,7 @@ SUBROUTINE DIELMIRONOV
 
 ! Purpose :
 !   Calculate the dielectric constant of a wet soil
-!   Developed and validated from 1 to 10 GHz.
+!   Developed and validated from 1 to 10 GHz.  bug, from 45 MHz to 26.5 GHz
 !   adapted for a large range of soil moisture
 
 
